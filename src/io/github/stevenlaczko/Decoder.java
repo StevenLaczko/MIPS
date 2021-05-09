@@ -6,14 +6,6 @@ class Opcode {
     String name;
     String binary;
 
-    public String getName() {
-        return name;
-    }
-
-    public String getBinary() {
-        return binary;
-    }
-
     public Opcode(String _name, String _binary) {
         name = _name;
         binary = _binary;
