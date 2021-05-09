@@ -1,4 +1,4 @@
-Hello world!
-Time for a test.
-Is this working?
-Is so, yay!
+00010001
+00100010
+00110010
+01000010
