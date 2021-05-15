@@ -97,12 +97,13 @@ class JInstructionObj extends InstructionObj {
 
 }
 
+enum I_Type {
+    RTYPE,
+    ITYPE,
+    JTYPE
+}
+
 public class Decoder {
-    enum I_Type {
-        RTYPE,
-        ITYPE,
-        JTYPE
-    }
 
     Registers reg;
 
@@ -118,21 +119,6 @@ public class Decoder {
         return GetInstrObject(instrStr, type);
     }
 
-    I_Type GetType(String instrStr) {
-        I_Type type = null;
-        String opcode = instrStr.substring(0, 6);
-        if (opcode.equals(Opcodes.rType.name)) {
-            type = I_Type.RTYPE;
-        }
-        else if (Arrays.stream(Opcodes.iTypes).anyMatch(x -> opcode.equals(x.binary))) {
-            type = I_Type.ITYPE;
-        }
-        else if (Arrays.stream(Opcodes.jTypes).anyMatch(x -> opcode.equals(x.binary))) {
-            type = I_Type.JTYPE;
-        }
-
-        return type;
-    }
 
     InstructionObj GetInstrObject(String instr, I_Type type) {
         if (type == I_Type.RTYPE) {

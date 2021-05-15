@@ -1,39 +1,52 @@
 package io.github.stevenlaczko;
 
+import java.util.HashMap;
 import java.util.Hashtable;
 
 
 public class Registers {
 
-    public enum REGISTERS {
-        ZERO,
-        AT,
-        v0, v1,
-        a0, a1, a2, a3,
-        t0, t1, t2, t3, t4, t5, t6, t7,
-        s0, s1, s2, s3, s4, s5, s6, s7,
-        t8, t9,
-        k0, k1,
-        gp,
-        sp,
-        fp,
-        ra,
-        pc,
-        INSTR
-    }
-    private final Hashtable<REGISTERS, Integer> registers = new Hashtable<REGISTERS, Integer>();
+    Mux writeMux = new Mux();
+    String[] register = new String[32];
+    HashMap<Inputs, String> inputs = new HashMap<>();
+    HashMap<Outputs, String> outputs = new HashMap<>();
 
-    public Registers() {
-        for (int i = 0; i < REGISTERS.values().length; i++) {
-            registers.put(REGISTERS.values()[i], 0);
+    enum Inputs {
+        Read_Register_1,
+        Read_Register_2,
+        Write_Data,
+        Write_Register
+    }
+
+    enum Outputs {
+        Read_Data_1,
+        Read_Data_2
+    }
+
+    enum MuxInputs {
+        rt,
+        rd
+    }
+
+    void SetInput(Inputs input, String value) {
+        inputs.put(input, value);
+    }
+
+    String GetOutput(Outputs output) {
+        return outputs.get(output);
+    }
+
+    void SetWriteMuxInput(MuxInputs input, String value) {
+        if (input == MuxInputs.rt) { // 0
+            writeMux.SetInput(0, value);
+        }
+        else if (input == MuxInputs.rd) { // 1
+            writeMux.SetInput(1, value);
         }
     }
 
-    public int get(REGISTERS regName) {
-        return this.registers.get(regName);
+    String GetWriteMuxOutput() {
+        return writeMux.GetOutput();
     }
 
-    public void set(REGISTERS regName, int value) {
-        this.registers.put(regName, value);
-    }
 }

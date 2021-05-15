@@ -28,42 +28,6 @@ public class Execute {
         } catch (IllegalArgumentException | IllegalAccessException | InvocationTargetException ignored) { }
     }
 
-    void LW(InstructionObj iObj) {
-
-    }
-
-    void SW(InstructionObj iObj) {
-
-    }
-
-    void ADDU(InstructionObj iObj) {
-
-    }
-    void SUBU(InstructionObj iObj) {
-
-    }
-    void AND(InstructionObj iObj) {
-
-    }
-    void OR(InstructionObj iObj) {
-
-    }
-
-    void NOR(InstructionObj iObj) {
-
-    }
-
-    void BEQ(InstructionObj iObj) {
-
-    }
-
-    void J(InstructionObj iObj) {
-
-    }
-
-    void HALT(InstructionObj iObj) {
-
-    }
 
     Instruction GetInstr(InstructionObj i) {
         if (i instanceof RInstructionObj) {
