@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import static io.github.stevenlaczko.CPU.*;
-import static io.github.stevenlaczko.MIPS.OUTPUT_FILE_PATH;
+import static io.github.stevenlaczko.Main.OUTPUT_FILE_PATH;
 
 
 public class Registers {

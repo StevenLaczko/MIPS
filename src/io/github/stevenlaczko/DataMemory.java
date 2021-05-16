@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
-import static io.github.stevenlaczko.MIPS.INPUT_FILE_PATH;
-import static io.github.stevenlaczko.MIPS.OUTPUT_FILE_PATH;
+import static io.github.stevenlaczko.Main.INPUT_FILE_PATH;
+import static io.github.stevenlaczko.Main.OUTPUT_FILE_PATH;
 
 public class DataMemory {
 

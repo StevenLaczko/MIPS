@@ -9,7 +9,7 @@ import java.util.Scanner;
 import static io.github.stevenlaczko.ALU.*;
 import static io.github.stevenlaczko.Control.*;
 import static io.github.stevenlaczko.DataMemory.*;
-import static io.github.stevenlaczko.MIPS.INPUT_FILE_PATH;
+import static io.github.stevenlaczko.Main.INPUT_FILE_PATH;
 import static io.github.stevenlaczko.Registers.*;
 
 enum INPUT {

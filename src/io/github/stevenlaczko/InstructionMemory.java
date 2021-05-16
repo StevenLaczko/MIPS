@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Vector;
 
-import static io.github.stevenlaczko.MIPS.INPUT_FILE_PATH;
+import static io.github.stevenlaczko.Main.INPUT_FILE_PATH;
 
 public class InstructionMemory {
     File instrFile;
