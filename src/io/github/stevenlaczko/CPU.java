@@ -1,6 +1,7 @@
 package io.github.stevenlaczko;
 
 import javax.xml.crypto.Data;
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ import java.util.Scanner;
 import static io.github.stevenlaczko.ALU.*;
 import static io.github.stevenlaczko.Control.*;
 import static io.github.stevenlaczko.DataMemory.*;
+import static io.github.stevenlaczko.MIPS.INPUT_FILE_PATH;
 import static io.github.stevenlaczko.Registers.*;
 
 enum INPUT {
@@ -85,7 +87,14 @@ public class CPU {
         boolean cliFlag = true;
         String input = scanner.nextLine();
         while (cliFlag) {
-            if (input.startsWith(INPUT.run.toString())) {
+            if (input.equals(INPUT.run.toString())) {
+                File temp = new File(INPUT_FILE_PATH + "Instructions.txt");
+                if (temp.exists()) {
+                    try { RunProgram("Instructions.txt"); }
+                    catch (IOException e) { e.printStackTrace(); }
+                }
+            }
+            else if (input.startsWith(INPUT.run.toString())) {
                 String[] inputTokens = input.split(" ");
 
                 try { RunProgram(inputTokens[1]); }
