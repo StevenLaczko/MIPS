@@ -5,18 +5,18 @@ import static io.github.stevenlaczko.CPU.BWSubstring;
 import static io.github.stevenlaczko.CPU.Format32Bits;
 
 public class ALU {
-    final String ALU_ADD = "0010";
-    final String ALU_SUB = "0110";
-    final String ALU_AND = "0000";
-    final String ALU_OR = "0001";
-    final String ALU_NOR = "1110";
-    final String ALU_SLT = "0111";
+    static final String ALU_ADD = "0010";
+    static final String ALU_SUB = "0110";
+    static final String ALU_AND = "0000";
+    static final String ALU_OR = "0001";
+    static final String ALU_NOR = "1110";
+    static final String ALU_SLT = "0111";
 
-    final String FUNC_ADDU = "100001";
-    final String FUNC_SUBU = "100011";
-    final String FUNC_AND  = "100100";
-    final String FUNC_OR   = "100101";
-    final String FUNC_NOR  = "100111";
+    static final String FUNC_ADDU = "100001";
+    static final String FUNC_SUBU = "100011";
+    static final String FUNC_AND  = "100100";
+    static final String FUNC_OR   = "100101";
+    static final String FUNC_NOR  = "100111";
 
     Clock clock;
     Mux aluMux;
@@ -41,8 +41,8 @@ public class ALU {
 
     String GetOutput() {
         zeroFlag = "0";
-        int a = Integer.parseInt(inputs[0], 2);
-        int b = Integer.parseInt(inputs[1], 2);
+        int a = (int)Long.parseLong(inputs[0], 2);
+        int b = (int)Long.parseLong(inputs[1], 2);
         String output = switch (controlInput) {
             case ALU_ADD -> ADD(a, b);
             case ALU_SUB -> SUB(a, b);
@@ -52,7 +52,7 @@ public class ALU {
             default -> null;
         };
         assert output != null;
-        if (Integer.parseInt(output, 2) == 0) {
+        if ((int)Long.parseLong(output, 2) == 0) {
             zeroFlag = "1";
         }
 
@@ -118,8 +118,8 @@ public class ALU {
     }
 
     String ADD(String s1, String s2) {
-        int a = Integer.parseInt(s1, 2);
-        int b = Integer.parseInt(s2, 2);
+        int a = (int)Long.parseLong(s1, 2);
+        int b = (int)Long.parseLong(s2, 2);
         return Format32Bits(Integer.toBinaryString(a + b));
     }
 

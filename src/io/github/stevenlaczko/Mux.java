@@ -18,7 +18,7 @@ public class Mux {
     }
 
     void SetControlInput(String input) {
-        controlInput = Integer.parseInt(input, 2);
+        controlInput = (int)Long.parseLong(input, 2);
 
         if (controlInput != 0 && controlInput != 1) {
             throw new IllegalArgumentException();

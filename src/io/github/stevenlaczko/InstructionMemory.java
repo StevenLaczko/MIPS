@@ -3,20 +3,17 @@ package io.github.stevenlaczko;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.Vector;
 
-import static io.github.stevenlaczko.MIPS.FILE_PATH;
+import static io.github.stevenlaczko.MIPS.INPUT_FILE_PATH;
 
 public class InstructionMemory {
     File instrFile;
     Scanner scanner;
+    Vector<String> instrLines = new Vector<>();
 
-    public InstructionMemory(Clock clock) {
-        loadFile(FILE_PATH);
-        clock.AddFunc(this::Callback);
-    }
-
-    void Callback() {
-
+    public InstructionMemory(String instrFile) {
+        loadFile(INPUT_FILE_PATH + instrFile);
     }
 
     void loadFile(String filePath) {
@@ -27,27 +24,19 @@ public class InstructionMemory {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        while (scanner.hasNextLine()) {
+            instrLines.add(scanner.nextLine());
+        }
     }
 
     String instrFetch(String PC) {
-        int pcInt = Integer.parseInt(PC, 2);
-        String instr = "";
-        int i = 0;
-        boolean foundPC = false;
-        while (!foundPC && scanner.hasNextLine()) {
-            if (pcInt == i) {
-                for (int j = 0; j < 4; j++) {
-                    instr += scanner.nextLine();
-                }
-                foundPC = true;
-            }
-            i++;
+        int i = (int)Long.parseLong(PC, 2);
+        int j = i + 4;
+        if (j >= instrLines.size()) {
+            return null;
         }
 
-        if (!foundPC) {
-            instr = null;
-        }
-
-        return instr;
+        return String.join("", instrLines.subList(i, j));
     }
 }

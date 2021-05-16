@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import static io.github.stevenlaczko.CPU.*;
+import static io.github.stevenlaczko.MIPS.OUTPUT_FILE_PATH;
 
 
 public class Registers {
@@ -48,21 +49,17 @@ public class Registers {
         clock.AddFunc(this::Callback);
         this.clock = clock;
         writeMux = new Mux(clock);
-        LoadRegisterData();
+        InitRegisters();
     }
 
-    void LoadRegisterData() {
-        File memFile = new File("src/io/github/stevenlaczko/input/IMemory.txt");
-        Scanner scanner = null;
-        try { scanner = new Scanner(memFile); }
-        catch (FileNotFoundException e) { e.printStackTrace(); }
+    void InitRegisters() {
         for (int i = 0; i < register.length; i++) {
-            register[i] = scanner.nextLine().strip();
+            register[i] = Format32Bits("0");
         }
     }
 
     void WriteToFile() throws IOException {
-        String filepath = "src/io/github/stevenlaczko/output/Registers.txt";
+        String filepath = OUTPUT_FILE_PATH + "Registers.txt";
         File regOutputFile = new File(filepath);
         try { regOutputFile.createNewFile(); }
         catch (IOException e) { e.printStackTrace(); }
@@ -85,7 +82,7 @@ public class Registers {
     }
 
     String ReadRegister(String addr) {
-        return register[Integer.parseInt(addr)];
+        return register[(int)Long.parseLong(addr, 2)];
     }
 
     void SetRegWrite(String flag) {
@@ -96,7 +93,7 @@ public class Registers {
     }
 
     void WriteRegister() {
-        register[Integer.parseInt(inputs.get(RegInput.Write_Register), 2)] = inputs.get(RegInput.Write_Data);
+        register[(int)Long.parseLong(inputs.get(RegInput.Write_Register), 2)] = inputs.get(RegInput.Write_Data);
     }
 
     void UpdateOutputs() {
@@ -113,10 +110,6 @@ public class Registers {
     void SetInput(RegInput input, String value) {
         value = Format32Bits(value);
         inputs.put(input, value);
-
-        if (input == RegInput.Write_Data || input == RegInput.Write_Register) {
-            WriteIfRegWrite();
-        }
     }
 
     String GetOutput(Outputs output) {

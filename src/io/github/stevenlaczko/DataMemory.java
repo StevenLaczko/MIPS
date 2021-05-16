@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.Vector;
 
+import static io.github.stevenlaczko.MIPS.INPUT_FILE_PATH;
+import static io.github.stevenlaczko.MIPS.OUTPUT_FILE_PATH;
+
 public class DataMemory {
 
     Clock clock;
@@ -35,7 +38,7 @@ public class DataMemory {
         this.clock = clock;
         memToRegMux = new Mux(clock);
 
-        dataFile = new File("src/io/github/stevenlaczko/input/IMemory.txt");
+        dataFile = new File(INPUT_FILE_PATH + "IMemory.txt");
         try {
             scanner = new Scanner(dataFile);
         } catch (FileNotFoundException e) {
@@ -49,7 +52,7 @@ public class DataMemory {
     }
 
     void WriteToFile() throws IOException {
-        String filepath = "src/io/github/stevenlaczko/output/Memory.txt";
+        String filepath = OUTPUT_FILE_PATH + "Memory.txt";
         File memOutputFile = new File(filepath);
         try { memOutputFile.createNewFile(); }
         catch (IOException e) { e.printStackTrace(); }
@@ -79,12 +82,14 @@ public class DataMemory {
     }
 
     int GetAddrDecimal() {
-        return Integer.parseInt(inputs[DMInput.Address.value]);
+        return (int)Long.parseLong(inputs[DMInput.Address.value], 2);
     }
 
     void WriteData() {
         int lineNum = GetAddrDecimal();
         dataMemory.set(lineNum, inputs[DMInput.WriteData.value]);
+        try { WriteToFile(); }
+        catch (IOException e) { e.printStackTrace(); }
     }
 
     String ReadData() {
