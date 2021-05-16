@@ -1,5 +1,6 @@
 package io.github.stevenlaczko;
 
+import static io.github.stevenlaczko.CPU.*;
 import static io.github.stevenlaczko.CPU.BWSubstring;
 import static io.github.stevenlaczko.CPU.Format32Bits;
 
@@ -17,18 +18,29 @@ public class ALU {
     final String FUNC_OR   = "100101";
     final String FUNC_NOR  = "100111";
 
-    Mux aluMux = new Mux();
-    String[] inputs = new String[2];
+    Clock clock;
+    Mux aluMux;
+    String[] inputs = {GetBinaryZeroStr(), GetBinaryZeroStr()};
     String controlInput;
-    int zeroFlag = 0;
+    String zeroFlag = "0";
     String output;
 
-    public ALU() {
+    public ALU(Clock clock) {
+        clock.AddFunc(this::Callback);
+        this.clock = clock;
+        aluMux = new Mux(clock);
+    }
+
+    void Callback() {
 
     }
 
+    String GetZeroFlag() {
+        return zeroFlag;
+    }
+
     String GetOutput() {
-        zeroFlag = 0;
+        zeroFlag = "0";
         int a = Integer.parseInt(inputs[0], 2);
         int b = Integer.parseInt(inputs[1], 2);
         String output = switch (controlInput) {
@@ -39,8 +51,9 @@ public class ALU {
             case ALU_NOR -> NOR(a, b);
             default -> null;
         };
+        assert output != null;
         if (Integer.parseInt(output, 2) == 0) {
-            zeroFlag = 1;
+            zeroFlag = "1";
         }
 
         return output;
@@ -48,14 +61,6 @@ public class ALU {
 
     void SetInput(int input, String value) {
         inputs[input] = value;
-    }
-
-    void SetMuxInput(int input, String value) {
-        aluMux.SetInput(input, value);
-    }
-
-    String GetMuxOutput() {
-        return aluMux.GetOutput();
     }
 
     void SetControlInput(String aluControlInput) {
@@ -72,6 +77,9 @@ public class ALU {
 
         String aluOp = BWSubstring(aluControlInput, 7, 6);
         String func = BWSubstring(aluControlInput, 5, 0);
+        if (aluControlInput.equals(SignExtend("1"))) {
+
+        }
         return switch (aluOp) {
             case "00" -> ALU_ADD; // sw, lw, or addiu
             case "01" -> ALU_SUB; // beq
@@ -86,6 +94,14 @@ public class ALU {
                     };
             default -> null;
         };
+    }
+
+    String ShiftLeft(String imm, int num) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(imm);
+        sb.append("0".repeat(Math.max(0, num)));
+
+        return sb.toString();
     }
 
     void LW() {
@@ -122,6 +138,24 @@ public class ALU {
                 sb.append('1');
             } else {
                 sb.append('0');
+            }
+        }
+
+        return sb.toString();
+    }
+
+    String AND(String s1, String s2) {
+        s1 = Format32Bits(s1);
+        s2 = Format32Bits(s2);
+        StringBuilder sb = new StringBuilder();
+
+        if (s1.length() != 1 || s2.length() != 1) {
+            for (int i = 0; i < 32; i++) {
+                if (s1.charAt(i) == '1' && s2.charAt(i) == '1') {
+                    sb.append('1');
+                } else {
+                    sb.append('0');
+                }
             }
         }
 

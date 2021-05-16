@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 
 class MIPS {
-    static final String FILE_PATH = "input/Instructions.txt";
+    static final String FILE_PATH = "src/io/github/stevenlaczko/input/Instructions1.txt";
 
     public static void main(String[] args) {
 

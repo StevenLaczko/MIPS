@@ -10,8 +10,13 @@ public class InstructionMemory {
     File instrFile;
     Scanner scanner;
 
-    public InstructionMemory() {
+    public InstructionMemory(Clock clock) {
         loadFile(FILE_PATH);
+        clock.AddFunc(this::Callback);
+    }
+
+    void Callback() {
+
     }
 
     void loadFile(String filePath) {
