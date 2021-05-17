@@ -3,7 +3,7 @@ An instruction level MIPS simulator written in Java.
 This program simulates a simple, 
 
 # Usage
-Must have java 16 installed
+Must have java 16 installed.
 Open commandline, cd to /MIPS/out/production
 Then enter: java io.github.stevenlaczko.Main
 
