@@ -1,11 +1,11 @@
 # MIPS
 An instruction level MIPS simulator written in Java.
-This program simulates a simple, 
+This program simulates a MIPS processor with a limited instruction set and without pipelining.
 
 # Usage
-Must have java 16 installed.
-Open commandline, cd to /MIPS/out/production
-Then enter: java io.github.stevenlaczko.Main
+> Must have java 16 installed.
+> Open commandline, cd to /MIPS/out/production
+> Then enter: java io.github.stevenlaczko.Main
 
 In the bottom of the directory you will find input and output folders.
 Place an instructions file (one byte per line) in the input folder called Instructions.txt
